@@ -1,9 +1,10 @@
-# GDExtension Android Plugin Template
-This repository serves as a quickstart template for building a GDExtension Android plugin for Godot 
-4.2+.
+# Godot OpenXR Android Plugin Template
+This repository serves as a quickstart template for building a Godot OpenXR Android plugin for 
+Godot 4.2+.
 
 ## Contents
 * [godot-cpp](godot-cpp) submodule for the GDExtension C++ bindings
+* [openxr](openxr) dependency
 * An illustrative simple Godot project: [`plugin/demo`](plugin/demo)
 * Preconfigured gradle build file to build and package the contents for the Android plugin: 
   [`plugin/build.gradle.kts`](plugin/build.gradle.kts)
@@ -13,7 +14,7 @@ This repository serves as a quickstart template for building a GDExtension Andro
   [`plugin/src/main/AndroidManifest.xml`](plugin/src/main/AndroidManifest.xml)
 * Preconfigured source files for the Kotlin/Java logic of the Android plugin: 
   [`plugin/src/main/java`](plugin/src/main/java)
-* Preconfigured source files for the C++ logic of the plugin: [`plugin/src/main/cpp`](plugin/src/main/cpp)
+* Sample OpenXR extension implementation for reference: [`plugin/src/main/cpp`](plugin/src/main/cpp)
 
 ## Usage
 **Note:** [Android Studio](https://developer.android.com/studio) is the recommended IDE for 
@@ -29,19 +30,6 @@ directory to initialize the `godot-cpp` submodule:
 ```
 git submodule update --init
 ```
-
-### Building the C++ bindings
-Build the Android C++ bindings using the following commands. To speed up compilation, add `-jN` at 
-the end of the SCons command line where `N` is the number of CPU threads you have on your system.
-The example below uses 4 threads.
-```
-cd godot-cpp
-scons platform=android target=template_debug -j4
-scons platform=android target=template_release -j4
-```
-
-When the command is completed, you should have static libraries stored in `godot-cpp/bin` that 
-will be used for compilation by the plugin.
 
 ### Configuring the template
 Several `TODO` have been added to the project to help identify where changes are needed; here's an 
@@ -75,7 +63,20 @@ overview of the minimum set of modifications needed:
         `gdextensionSupportsNonAndroidPlatforms` flag in [`plugin/build.gradle.kts`](plugin/build.gradle.kts)
         to `true`. Set it to `false` otherwise
 
-### Building the configured Android plugin
+### Building the C++ bindings
+Build the Android C++ bindings using the following commands. To speed up compilation, add `-jN` at
+the end of the SCons command line where `N` is the number of CPU threads you have on your system.
+The example below uses 4 threads.
+```
+cd godot-cpp
+scons platform=android target=template_debug -j4
+scons platform=android target=template_release -j4
+```
+
+When the command is completed, you should have static libraries stored in `godot-cpp/bin` that
+will be used for compilation by the plugin.
+
+### Building the configured plugin
 - In a terminal window, navigate to the project's root directory and run the following command:
 ```
 ./gradlew assemble
@@ -83,12 +84,15 @@ overview of the minimum set of modifications needed:
 - On successful completion of the build, the output files can be found in
   [`plugin/demo/addons`](plugin/demo/addons)
 
-### Testing the Android plugin
+### Testing the plugin
 You can use the included [Godot demo project](plugin/demo/project.godot) to test the built Android 
 plugin
 
 - Open the demo in Godot (4.2 or higher)
-- Navigate to `Project` -> `Project Settings...` -> `Plugins`, and ensure the plugin is enabled
+- Install the [Godot OpenXR Vendors plugin](https://github.com/GodotVR/godot_openxr_loaders) 
+- Navigate to `Project` -> `Project Settings...` -> `Plugins`
+- Enable the Godot OpenXR Vendors plugin
+- Enable this project's plugin
 - Install the Godot Android build template by clicking on `Project` -> `Install Android Build Template...`
 - Open [`plugin/demo/main.gd`](plugin/demo/main.gd) and update the logic as needed to reference 
   your plugin and its methods
@@ -108,7 +112,7 @@ class_name PluginInterface extends Object
 
 ## Interface used to access the functionality provided by this plugin
 
-var _plugin_name = "GDExtensionAndroidPluginTemplate"
+var _plugin_name = "GodotOpenXRAndroidPluginTemplate"
 var _plugin_singleton
 
 func _init():
@@ -128,11 +132,11 @@ func helloWorld():
 
 ##### Support using the gdextension functionality in the Godot Editor
 
-If planning to use the gdextension functionality in the Godot Editor, it is recommended that the 
-gdextension's native binaries are compiled not just for Android, but also for the OS onto which 
-developers / users intend to run the Godot Editor. Not doing so may prevent developers / 
+If planning to use the gdextension functionality in the Godot Editor, it is recommended that the
+gdextension's native binaries are compiled not just for Android, but also for the OS onto which
+developers / users intend to run the Godot Editor. Not doing so may prevent developers /
 users from writing code that accesses the plugin from within the Godot Editor.
 
-This may involve creating dummy plugins for the host OS just so the API is published to the 
-editor. You can use the [godot-cpp-template](https://github.com/godotengine/godot-cpp-template) 
+This may involve creating dummy plugins for the host OS just so the API is published to the
+editor. You can use the [godot-cpp-template](https://github.com/godotengine/godot-cpp-template)
 github template for reference on how to do so.

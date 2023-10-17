@@ -1,15 +1,17 @@
 // TODO: Update to match your plugin's package name.
-package org.godotengine.plugin.android.gdextension.template
+package org.godotengine.plugin.android.gdextension.openxr.template
 
 import android.util.Log
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin
-import org.godotengine.godot.plugin.UsedByGodot
 
-class GDExtensionAndroidPlugin(godot: Godot): GodotPlugin(godot) {
+/**
+ * Init class for the plugin
+ */
+class GodotOpenXRAndroidPlugin(godot: Godot): GodotPlugin(godot) {
 
     companion object {
-        val TAG = GDExtensionAndroidPlugin::class.java.simpleName
+        val TAG = GodotOpenXRAndroidPlugin::class.java.simpleName
 
         init {
             try {
@@ -25,12 +27,4 @@ class GDExtensionAndroidPlugin(godot: Godot): GodotPlugin(godot) {
 
     override fun getPluginGDExtensionLibrariesPaths() = setOf("res://addons/${BuildConfig.GODOT_PLUGIN_NAME}/plugin.gdextension")
 
-    /**
-     * Example showing how to declare a native method that uses GDExtension C++ bindings and is
-     * exposed to gdscript.
-     *
-     * Print a 'Hello World' message to the logcat.
-     */
-    @UsedByGodot
-    private external fun helloWorld()
 }

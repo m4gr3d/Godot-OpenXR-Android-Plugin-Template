@@ -65,7 +65,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # TODO: Update cmake project's name.
-project(GDExtensionAndroidPluginTemplate LANGUAGES CXX)
+project(GodotOpenXRAndroidPluginTemplate LANGUAGES CXX)
 
 set(GODOT_COMPILE_FLAGS)
 set(GODOT_LINKER_FLAGS)
@@ -93,6 +93,9 @@ else ()
     set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -O3")
 endif (CMAKE_BUILD_TYPE MATCHES Debug)
 
+
+## OpenXR headers
+set(OPENXR_HEADERS_DIR "${CMAKE_SOURCE_DIR}/../openxr/include")
 
 ## godot-cpp library
 set(GODOT_CPP_DIR "${CMAKE_SOURCE_DIR}/../godot-cpp")
@@ -124,6 +127,7 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
 target_include_directories(${CMAKE_PROJECT_NAME}
         SYSTEM PUBLIC
         ${GODOT_CPP_INCLUDE_DIRECTORIES}
+        ${OPENXR_HEADERS_DIR}
         )
 
 # Specifies libraries CMake should link to your target library. You

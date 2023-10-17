@@ -5,18 +5,23 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
 
+#include "sample_openxr_extension_wrapper_extension.h"
+
 using namespace godot;
 
 void initialize_plugin_module(ModuleInitializationLevel p_level) {
     // TODO: Update to the proper ModuleInitializationLevel level for your plugin
-    if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) {
+    if (p_level != godot::MODULE_INITIALIZATION_LEVEL_CORE) {
         return;
     }
+
+    ClassDB::register_class<SampleOpenXRExtensionWrapperExtension>();
+    SampleOpenXRExtensionWrapperExtension::get_singleton()->register_extension_wrapper();
 }
 
 void uninitialize_plugin_module(ModuleInitializationLevel p_level) {
     // TODO: Update to the proper ModuleInitializationLevel level for your plugin
-    if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) {
+    if (p_level != godot::MODULE_INITIALIZATION_LEVEL_CORE) {
         return;
     }
 }
@@ -34,7 +39,7 @@ GDExtensionBool GDE_EXPORT plugin_library_init(GDExtensionInterfaceGetProcAddres
     init_obj.register_terminator(uninitialize_plugin_module);
 
     // TODO: Update to the proper ModuleInitializationLevel level for your plugin
-    init_obj.set_minimum_library_initialization_level(godot::MODULE_INITIALIZATION_LEVEL_SCENE);
+    init_obj.set_minimum_library_initialization_level(godot::MODULE_INITIALIZATION_LEVEL_CORE);
 
     return init_obj.init();
 }
